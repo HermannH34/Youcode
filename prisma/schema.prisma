@@ -51,6 +51,8 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+
+  courses   Course[]
 }
 
 model VerificationToken {
@@ -61,3 +63,14 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verificationtokens")
 }
+
+model Course {
+  id       String   @id @default(cuid())
+  image    String
+  name     String
+  userId   String   @map("user_id")
+
+  // Required relationship with User
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
