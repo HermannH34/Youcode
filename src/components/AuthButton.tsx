@@ -1,8 +1,9 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import * as React from "react"
+import Link from 'next/link'
 
 import {
     DropdownMenu,
@@ -45,12 +46,16 @@ function DropdownMenuRadioGroupDemo({ userName, userImage }: DropdownMenuRadioGr
                         {userName}</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-16">
-                    <DropdownMenuLabel></DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-                        {/* ALERT FOR SIGNOUT */}
-                        <AlertDialog>
-                            <AlertDialogTrigger className="pl-8">Logout</AlertDialogTrigger>
+                    <DropdownMenuLabel className="w-full h-full flex justify-center items-center" asChild>
+                        <Link href="/account">
+                            Account
+                        </Link>
+                    </DropdownMenuLabel>
+                    <AlertDialog>
+                        <DropdownMenuSeparator></DropdownMenuSeparator>
+                        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+                            {/* ALERT FOR SIGNOUT */}
+                            <AlertDialogTrigger className="w-full">Logout</AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -63,10 +68,10 @@ function DropdownMenuRadioGroupDemo({ userName, userImage }: DropdownMenuRadioGr
                                     <AlertDialogAction onClick={() => signOut()}>Continue</AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
-                        </AlertDialog>
-                    </DropdownMenuRadioGroup>
+                        </DropdownMenuRadioGroup>
+                    </AlertDialog>
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu >
         </>
     )
 }
