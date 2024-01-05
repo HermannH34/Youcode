@@ -1,5 +1,6 @@
 import { authOptions } from '../pages/api/auth/[...nextauth]'
 import { getServerSession } from "next-auth/next"
+import { getServerSidePropsContext } from 'next'
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)

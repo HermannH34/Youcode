@@ -1,51 +1,49 @@
-"use client";
-
 import React from 'react';
-import { signIn, useSession } from "next-auth/react";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-} from "@/components/ui/card";
-
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
+import {
+    Card,
+    CardTitle,
+} from "@/components/ui/card";
 
+type Course = {
+    id: string;
+    userId: string;
+    name: string;
+    image: string;
+};
 
-export const AccountPage = ({ courses }) => {
-    const { data: session } = useSession();
+type AccountPageProps = {
+    courses: Course[];
+};
 
-    if (session) {
-        return (
-            <div>
-                <h1 className='pl-8 text-3xl'>Courses</h1>
-                <Card className="p-4 w-[1000px] h-[300px] m-4">
+export const AccountPage = ({ courses }: AccountPageProps) => {
+    return (
+        <div>
+            <h1 className='pl-8 text-3xl'>Mes Cours</h1>
+            <div className="flex flex-wrap justify-center">
+                <Card className="p-4 w-[1000px] m-4">
                     <Table>
-                        <TableHeader >
+                        <TableHeader>
                             <TableRow>
-                                <TableHead className="w-50">Image</TableHead>
-                                <TableHead className="w-30">Name</TableHead>
+                                <TableHead className="w-1/2">Image</TableHead>
+                                <TableHead className="w-1/2">Nom</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {courses.filter(course => course.userId === session.user.id).map((course) => (
-                                <TableRow key={course.id} >
+                            {courses.map(course => (
+                                <TableRow key={course.id}>
                                     <TableCell className="font-medium">
                                         <Avatar>
-                                            <AvatarImage src={course.image} />
+                                            <AvatarImage src={course.image} alt={`Image de ${course.name}`} />
                                         </Avatar>
                                     </TableCell>
                                     <TableCell>
@@ -57,19 +55,7 @@ export const AccountPage = ({ courses }) => {
                     </Table>
                 </Card>
             </div>
-        );
-    }
-
-    // Render this if there's no session
-    return (
-        <Card className="h-1/3">
-            <CardHeader>You need to be logged in to view this page.</CardHeader>
-            <CardContent>
-            </CardContent>
-            <CardFooter>
-                <Button variant="outline" onClick={() => signIn()}>Log In</Button>
-            </CardFooter>
-        </Card>
+        </div>
     );
 };
 
